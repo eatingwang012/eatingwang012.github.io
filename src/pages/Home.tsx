@@ -11,7 +11,8 @@ export default function Home() {
   const [showContactCard, setShowContactCard] = useState(false);
   const [contactType, setContactType] = useState<'email' | 'tel' | 'wechat' | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [carouselInterval, setCarouselInterval] = useState<number | null>(null);
+  type CarouselTimer = ReturnType<typeof setInterval>;
+  const [carouselInterval, setCarouselInterval] = useState<CarouselTimer | null>(null);
   // 新增：项目弹窗相关状态
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProjectId] = useState<number | null>(null); // 当前项目ID状态
@@ -36,12 +37,12 @@ export default function Home() {
 
   // Auto-advance carousel every seconds
   const startCarousel = () => {
-    const interval = setInterval(() => {
+    const intervalId = setInterval(() => {
       setCurrentImageIndex(prev =>
         prev === resolvedProfileImages.length - 1 ? 0 : prev + 1
       );
     }, 3000);
-    setCarouselInterval(interval);
+    setCarouselInterval(intervalId);
   };
 
   // Pause carousel
