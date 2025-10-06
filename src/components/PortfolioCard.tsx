@@ -28,9 +28,9 @@ export function PortfolioCard({
   const cardRef = useRef<HTMLDivElement>(null);
   // Ensure image paths are resolved correctly
   const images = Array.isArray(imageUrl)
-    ? imageUrl.map((url) => `${import.meta.env.BASE_URL}${url}`)
+    ? imageUrl.map((url) => new URL(url, import.meta.env.BASE_URL).toString())
     : imageUrl
-      ? imageUrl.split(',').filter(url => url.trim() !== '').map((url) => `${import.meta.env.BASE_URL}${url}`)
+      ? imageUrl.split(',').filter(url => url.trim() !== '').map((url) => new URL(url, import.meta.env.BASE_URL).toString())
       : [];
 
   // Go to next image

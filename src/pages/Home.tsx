@@ -16,8 +16,8 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProjectId] = useState<number | null>(null); // 当前项目ID状态
 
-  // Ensure profileImages paths are correctly resolved
-  const resolvedProfileImages = profileImages.map((image) => `${import.meta.env.BASE_URL}${image}`);
+  // Ensure profileImages paths are correctly resolved (avoid leading //)
+  const resolvedProfileImages = profileImages.map((image) => new URL(image, import.meta.env.BASE_URL).toString());
 
   // Navigate to next image
   const nextImage = () => {

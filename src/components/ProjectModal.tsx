@@ -51,7 +51,7 @@ export function ProjectModal({
   // Get current project
   const currentProject = projects[currentIndex];
   // Ensure image paths are resolved correctly
-  const images = currentProject?.imageUrls.map((url) => `${import.meta.env.BASE_URL}${url}`) || [];
+  const images = currentProject?.imageUrls.map((url) => new URL(url, import.meta.env.BASE_URL).toString()) || [];
 
   // Close modal when pressing Escape key
   useEffect(() => {
