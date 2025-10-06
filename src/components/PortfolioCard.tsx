@@ -27,7 +27,8 @@ export function PortfolioCard({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
   // Ensure image paths are resolved correctly
-  const base = ((import.meta as any)?.env?.BASE_URL ?? '/') as string;
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://localhost';
+  const base = new URL(((import.meta as any)?.env?.BASE_URL ?? '/'), origin).toString();
   const images = Array.isArray(imageUrl)
     ? imageUrl.map((url) => new URL(url, base).toString())
     : imageUrl

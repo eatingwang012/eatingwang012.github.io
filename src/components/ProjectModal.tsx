@@ -50,8 +50,9 @@ export function ProjectModal({
 
   // Get current project
   const currentProject = projects[currentIndex];
-  // Ensure image paths are resolved correctly with safe base
-  const base = ((import.meta as any)?.env?.BASE_URL ?? '/') as string;
+  // Ensure image paths are resolved correctly with absolute base
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://localhost';
+  const base = new URL(((import.meta as any)?.env?.BASE_URL ?? '/'), origin).toString();
   const images = currentProject?.imageUrls.map((url) => new URL(url, base).toString()) || [];
 
   // Close modal when pressing Escape key

@@ -24,7 +24,11 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
             className="flex items-center text-gray-900 hover:text-gray-600 transition-colors cursor-pointer"
           >
             <img
-              src={new URL('eating.png', ((import.meta as any)?.env?.BASE_URL ?? '/')).toString()}
+              src={(() => {
+                const origin = typeof window !== 'undefined' ? window.location.origin : 'https://localhost';
+                const absoluteBase = new URL(((import.meta as any)?.env?.BASE_URL ?? '/'), origin).toString();
+                return new URL('eating.png', absoluteBase).toString();
+              })()}
               alt="Logo"
               className="h-5 w-auto mr-2 opacity-100"
             />
