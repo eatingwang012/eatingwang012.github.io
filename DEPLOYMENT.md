@@ -31,7 +31,7 @@ git add .
 git commit -m "Initial commit: Personal portfolio website"
 
 # 4. 添加远程仓库
-git remote add origin https://github.com/eatingwang012/eatingwang012.github.io.git
+git remote add origin https://github.com/wangyiting0412/eatingwang012.github.io.git
 
 # 5. 推送到GitHub
 git branch -M main
