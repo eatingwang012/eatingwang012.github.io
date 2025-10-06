@@ -3,7 +3,7 @@ export const experiences = [
   {
     id: 1,
     title: "产品经理",
-    logoUrl: "public/meituan.png",
+    logoUrl: "/meituan.png",
     company: "美团",
     period: "2025.05-2025.09",
     description: "担任服务零售事业部-内容体验-休娱行业产品经理，通过内容的挖掘与生产、素材匹配与加工、表达应用和分发，以不同内容形态满足用户找店、找人、找品、找玩法活动需求。",
@@ -21,7 +21,7 @@ export const experiences = [
     company: "TCL",
     period: "2025.03-2025.05",
     description: "参与电商平台的开发，负责用户界面和交互体验优化担任TCL智能设备的AI产品经理，负责设备内置AI应用的体验优化与场景创新，提升应用的深度使用率，探索AI在消费电子中的新场景。沉淀丰富的模型评测、效果调优、多模态探索的经验。",
-    logoUrl: "public/tcl.jpg",
+    logoUrl: "/tcl.jpg",
     achievements: [
       "参与AI-Voicememo专项，围绕模型评测及prompt调优，提升模型提取核心观点、关键数据、待办事项，输出结构化摘要能力，为用户高效获取信息提供有力支撑",
       "独立负责调研，关注 AI 在国内外平板及手机端的应用趋势，系统调研设备内置AI功能的应用方式、交互逻辑及展示形态，构思AI场景化应用机会点",
@@ -31,7 +31,7 @@ export const experiences = [
   },
   {
     id: 3,
-    logoUrl: "public/honor.png",
+    logoUrl: "/honor.png",
     title: "产品规划",
     company: "荣耀",
     period: "2024.10-2025.02",
