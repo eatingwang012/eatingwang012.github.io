@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 // Portfolio Card Component - REUSABLE FOR BOTH AI AND ARCHITECTURE PORTFOLIOS
@@ -35,6 +35,14 @@ export function PortfolioCard({
       ? imageUrl.split(',').filter(url => url.trim() !== '').map((url) => new URL(url, base).toString())
       : [];
 
+  // Preload images for faster switching
+  useEffect(() => {
+    images.forEach((imageUrl) => {
+      const img = new Image();
+      img.src = imageUrl;
+    });
+  }, [images]);
+
   // Go to next image
   const nextImage = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -67,7 +75,7 @@ export function PortfolioCard({
       const deltaY = endTouch.clientY - startY;
       
       // 如果水平滑动距离大于垂直滑动距离，且滑动距离足够大
-      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
         if (deltaX > 0) {
           prevImage();
         } else {
@@ -102,7 +110,8 @@ export function PortfolioCard({
         <img
           src={images[currentImageIndex]}
           alt={`${title} - Image ${currentImageIndex + 1}`}
-          className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
+          className="max-w-full max-h-full object-contain transition-transform duration-200 group-hover:scale-105"
+          loading="eager"
         />
 
         {/* Image Navigation Arrows - Only show if multiple images */}
@@ -115,7 +124,7 @@ export function PortfolioCard({
                 e.stopPropagation();
                 prevImage();
               }}
-              className={`absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 rounded-full transition-opacity duration-300 touch-manipulation ${isHovered ? 'opacity-100' : 'opacity-70'}`}
+              className={`absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 rounded-full transition-opacity duration-150 touch-manipulation ${isHovered ? 'opacity-100' : 'opacity-70'}`}
               aria-label="Previous image"
             >
               <i className="fa-solid fa-chevron-left"></i>
@@ -128,14 +137,14 @@ export function PortfolioCard({
                 e.stopPropagation();
                 nextImage();
               }}
-              className={`absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 rounded-full transition-opacity duration-300 touch-manipulation ${isHovered ? 'opacity-100' : 'opacity-70'}`}
+              className={`absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 rounded-full transition-opacity duration-150 touch-manipulation ${isHovered ? 'opacity-100' : 'opacity-70'}`}
               aria-label="Next image"
             >
               <i className="fa-solid fa-chevron-right"></i>
             </button>
 
             {/* Image Counter */}
-            <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/30 text-white text-xs px-2 py-1 rounded-full transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+            <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/30 text-white text-xs px-2 py-1 rounded-full transition-opacity duration-150 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
               {currentImageIndex + 1} / {images.length}
             </div>
           </>

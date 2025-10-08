@@ -55,6 +55,14 @@ export function ProjectModal({
   const base = new URL(((import.meta as any)?.env?.BASE_URL ?? '/'), origin).toString();
   const images = currentProject?.imageUrls.map((url) => new URL(url, base).toString()) || [];
 
+  // Preload images for faster switching
+  useEffect(() => {
+    images.forEach((imageUrl) => {
+      const img = new Image();
+      img.src = imageUrl;
+    });
+  }, [images]);
+
   // Close modal when pressing Escape key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -145,7 +153,7 @@ export function ProjectModal({
               const deltaY = endTouch.clientY - startY;
               
               // 如果水平滑动距离大于垂直滑动距离，且滑动距离足够大
-              if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+              if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
                 if (deltaX > 0) {
                   prevImage();
                 } else {
@@ -164,7 +172,8 @@ export function ProjectModal({
           <img
             src={images[currentImageIndex]}
             alt={`${currentProject.title} - Image ${currentImageIndex + 1}`}
-            className="max-w-full max-h-full object-contain"
+            className="max-w-full max-h-full object-contain transition-opacity duration-200"
+            loading="eager"
           />
         </div>
 

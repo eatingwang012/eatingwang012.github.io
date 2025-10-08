@@ -61,6 +61,14 @@ export default function Home() {
     }
   };
 
+  // Preload images for faster switching
+  useEffect(() => {
+    resolvedProfileImages.forEach((imageUrl) => {
+      const img = new Image();
+      img.src = imageUrl;
+    });
+  }, [resolvedProfileImages]);
+
   // Start carousel on mount
   useEffect(() => {
     startCarousel();
@@ -118,7 +126,7 @@ export default function Home() {
                 const deltaY = endTouch.clientY - startY;
                 
                 // 如果水平滑动距离大于垂直滑动距离，且滑动距离足够大
-                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
                   if (deltaX > 0) {
                     prevImage();
                   } else {
@@ -128,7 +136,7 @@ export default function Home() {
                 
                 document.removeEventListener('touchmove', handleTouchMove);
                 document.removeEventListener('touchend', handleTouchEnd);
-                setTimeout(resumeCarousel, 1000);
+                setTimeout(resumeCarousel, 500);
               };
               
               document.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -138,7 +146,8 @@ export default function Home() {
             <img
               src={resolvedProfileImages[currentImageIndex]}
               alt={`${personalInfo.name} - Image ${currentImageIndex + 1}`}
-              className="w-full h-auto object-cover transition-opacity duration-500 aspect-video"
+              className="w-full h-auto object-cover transition-opacity duration-200 aspect-video"
+              loading="eager"
             />
 
             {/* Previous Image Button */}
@@ -148,7 +157,7 @@ export default function Home() {
                 e.preventDefault();
                 prevImage();
               }}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 sm:p-3 rounded-full transition-all backdrop-blur-sm opacity-70 hover:opacity-100 active:opacity-100 touch-manipulation"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 sm:p-3 rounded-full transition-all duration-150 backdrop-blur-sm opacity-70 hover:opacity-100 active:opacity-100 touch-manipulation"
               aria-label="Previous image"
             >
               <i className="fa-solid fa-chevron-left text-sm sm:text-base"></i>
@@ -161,7 +170,7 @@ export default function Home() {
                 e.preventDefault();
                 nextImage();
               }}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 sm:p-3 rounded-full transition-all backdrop-blur-sm opacity-70 hover:opacity-100 active:opacity-100 touch-manipulation"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 sm:p-3 rounded-full transition-all duration-150 backdrop-blur-sm opacity-70 hover:opacity-100 active:opacity-100 touch-manipulation"
               aria-label="Next image"
             >
               <i className="fa-solid fa-chevron-right text-sm sm:text-base"></i>
