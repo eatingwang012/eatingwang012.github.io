@@ -51,6 +51,38 @@ export function PortfolioCard({
     );
   };
 
+  // Handle touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    const startX = touch.clientX;
+    const startY = touch.clientY;
+    
+    const handleTouchMove = (moveEvent: TouchEvent) => {
+      moveEvent.preventDefault();
+    };
+    
+    const handleTouchEnd = (endEvent: TouchEvent) => {
+      const endTouch = endEvent.changedTouches[0];
+      const deltaX = endTouch.clientX - startX;
+      const deltaY = endTouch.clientY - startY;
+      
+      // 如果水平滑动距离大于垂直滑动距离，且滑动距离足够大
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          prevImage();
+        } else {
+          nextImage();
+        }
+      }
+      
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+    
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd);
+  };
+
   return (
     <div
       className={cn(
@@ -65,6 +97,7 @@ export function PortfolioCard({
       <div
         className="w-full aspect-[2/1] overflow-hidden bg-gray-50 relative flex items-center justify-center"
         ref={cardRef}
+        onTouchStart={handleTouchStart}
       >
         <img
           src={images[currentImageIndex]}
@@ -77,7 +110,12 @@ export function PortfolioCard({
           <>
             <button
               onClick={prevImage}
-              className={`absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                prevImage();
+              }}
+              className={`absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 rounded-full transition-opacity duration-300 touch-manipulation ${isHovered ? 'opacity-100' : 'opacity-70'}`}
               aria-label="Previous image"
             >
               <i className="fa-solid fa-chevron-left"></i>
@@ -85,7 +123,12 @@ export function PortfolioCard({
 
             <button
               onClick={nextImage}
-              className={`absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nextImage();
+              }}
+              className={`absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 rounded-full transition-opacity duration-300 touch-manipulation ${isHovered ? 'opacity-100' : 'opacity-70'}`}
               aria-label="Next image"
             >
               <i className="fa-solid fa-chevron-right"></i>

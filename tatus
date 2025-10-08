@@ -1,0 +1,5 @@
+[33m8fe645a[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix: 修复移动端图片切换触摸问题
+[33maed56d0[m feat: 更新Design Portfolio关键词和新增荣耀实习经历
+[33m46ebb49[m[33m ([m[1;31morigin/base-stable[m[33m, [m[1;32mbase-stable[m[33m)[m fix: use absolute base (window.location.origin + BASE_URL) for image URLs, avoid Invalid base URL
+[33me9d6200[m fix(Home): correct interval typing and variable name for carousel
+[33me6e4f5e[m fix: robust image URL resolution with safe BASE_URL fallback
