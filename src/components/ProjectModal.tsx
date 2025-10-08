@@ -105,22 +105,62 @@ export function ProjectModal({
         {/* Image Navigation Arrows */}
         <button
           onClick={prevImage}
-          className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/30 p-3 text-white backdrop-blur-sm hover:bg-black/50 transition-colors"
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            prevImage();
+          }}
+          className="absolute left-2 sm:left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/30 p-2 sm:p-3 text-white backdrop-blur-sm hover:bg-black/50 active:bg-black/60 transition-colors touch-manipulation"
           aria-label="Previous image"
         >
-          <i className="fa-solid fa-chevron-left"></i>
+          <i className="fa-solid fa-chevron-left text-sm sm:text-base"></i>
         </button>
 
         <button
           onClick={nextImage}
-          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/30 p-3 text-white backdrop-blur-sm hover:bg-black/50 transition-colors"
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            nextImage();
+          }}
+          className="absolute right-2 sm:right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/30 p-2 sm:p-3 text-white backdrop-blur-sm hover:bg-black/50 active:bg-black/60 transition-colors touch-manipulation"
           aria-label="Next image"
         >
-          <i className="fa-solid fa-chevron-right"></i>
+          <i className="fa-solid fa-chevron-right text-sm sm:text-base"></i>
         </button>
 
         {/* Project Image */}
-        <div className="relative w-full h-[400px] overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
+        <div 
+          className="relative w-full h-[400px] overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center"
+          onTouchStart={(e) => {
+            const touch = e.touches[0];
+            const startX = touch.clientX;
+            const startY = touch.clientY;
+            
+            const handleTouchMove = (moveEvent: TouchEvent) => {
+              moveEvent.preventDefault();
+            };
+            
+            const handleTouchEnd = (endEvent: TouchEvent) => {
+              const endTouch = endEvent.changedTouches[0];
+              const deltaX = endTouch.clientX - startX;
+              const deltaY = endTouch.clientY - startY;
+              
+              // 如果水平滑动距离大于垂直滑动距离，且滑动距离足够大
+              if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                  prevImage();
+                } else {
+                  nextImage();
+                }
+              }
+              
+              document.removeEventListener('touchmove', handleTouchMove);
+              document.removeEventListener('touchend', handleTouchEnd);
+            };
+            
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd);
+          }}
+        >
           <img
             src={images[currentImageIndex]}
             alt={`${currentProject.title} - Image ${currentImageIndex + 1}`}

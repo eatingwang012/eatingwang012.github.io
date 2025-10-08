@@ -101,7 +101,39 @@ export default function Home() {
         <div className="w-full max-w-2xl mx-auto">
           <div className="relative w-full rounded-lg overflow-hidden shadow-md"
             onMouseEnter={pauseCarousel}
-            onMouseLeave={resumeCarousel}>
+            onMouseLeave={resumeCarousel}
+            onTouchStart={(e) => {
+              pauseCarousel();
+              const touch = e.touches[0];
+              const startX = touch.clientX;
+              const startY = touch.clientY;
+              
+              const handleTouchMove = (moveEvent: TouchEvent) => {
+                moveEvent.preventDefault();
+              };
+              
+              const handleTouchEnd = (endEvent: TouchEvent) => {
+                const endTouch = endEvent.changedTouches[0];
+                const deltaX = endTouch.clientX - startX;
+                const deltaY = endTouch.clientY - startY;
+                
+                // 如果水平滑动距离大于垂直滑动距离，且滑动距离足够大
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                  if (deltaX > 0) {
+                    prevImage();
+                  } else {
+                    nextImage();
+                  }
+                }
+                
+                document.removeEventListener('touchmove', handleTouchMove);
+                document.removeEventListener('touchend', handleTouchEnd);
+                setTimeout(resumeCarousel, 1000);
+              };
+              
+              document.addEventListener('touchmove', handleTouchMove, { passive: false });
+              document.addEventListener('touchend', handleTouchEnd);
+            }}>
             {/* Current Image */}
             <img
               src={resolvedProfileImages[currentImageIndex]}
@@ -112,19 +144,27 @@ export default function Home() {
             {/* Previous Image Button */}
             <button
               onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-all backdrop-blur-sm opacity-0 hover:opacity-100"
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                prevImage();
+              }}
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 sm:p-3 rounded-full transition-all backdrop-blur-sm opacity-70 hover:opacity-100 active:opacity-100 touch-manipulation"
               aria-label="Previous image"
             >
-              <i className="fa-solid fa-chevron-left"></i>
+              <i className="fa-solid fa-chevron-left text-sm sm:text-base"></i>
             </button>
 
             {/* Next Image Button */}
             <button
               onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition-all backdrop-blur-sm opacity-0 hover:opacity-100"
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                nextImage();
+              }}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 active:bg-black/60 text-white p-2 sm:p-3 rounded-full transition-all backdrop-blur-sm opacity-70 hover:opacity-100 active:opacity-100 touch-manipulation"
               aria-label="Next image"
             >
-              <i className="fa-solid fa-chevron-right"></i>
+              <i className="fa-solid fa-chevron-right text-sm sm:text-base"></i>
             </button>
           </div>
         </div>
