@@ -17,7 +17,7 @@ export const architectureProjects = [
       "/lychee10.jpg",
       "/lychee11.jpg"
     ],
-    tags: ["文化建筑", "概念设计", "空间设计"],
+    tags: ["工业设计", "机械结构", "农业"],
     githubUrl: "https://github.com/zhangsan/cultural-center"
   },
   {
@@ -38,13 +38,13 @@ export const architectureProjects = [
       "/hotel11.jpg",
       "/hotel12.jpg"
     ],
-    tags: ["建筑设计", "住宅设计", "环保理念"],
+    tags: ["服务设计", "概念设计", "环保理念"],
     githubUrl: "https://github.com/zhangsan/modern-house"
   },
   {
     id: 2,
-    title: "蜜蜂认养系统设计",
-    description: "聚焦蜂蜜零售推出“线上认养 + 实时蜂箱监控”，解决产销侧卖蜜难与辨真难的痛点。",
+    title: "荔枝认养系统设计",
+    description: "聚焦荔枝零售推出\"线上认养 + 实时果园监控\"，解决产销侧卖果难与辨真难的痛点。",
     imageUrls: [
       "/bee1.jpg",
       "/bee2.jpg",
@@ -59,7 +59,7 @@ export const architectureProjects = [
       "/bee11.jpg",
       "/bee12.jpg"
     ],
-    tags: ["城市规划", "商业设计", "功能布局"],
+    tags: ["系统设计", "服务设计", "农业"],
     githubUrl: "https://github.com/zhangsan/commercial-complex"
   },
 
@@ -79,12 +79,12 @@ export const architectureProjects = [
       "/canton9.jpg",
       "/canton10.jpg"
     ],
-    tags: ["景观设计", "生态规划", "公园设计"],
+    tags: ["工业设计", "儿童早教", "文化创意"],
     githubUrl: "https://github.com/zhangsan/eco-park"
   },
   {
     id: 5,
-    title: "六神音乐节-营销策划案",
+    title: "六神音乐节-品牌策划案",
     description: "为国货品牌注入年轻活力，结合产品和用户，开创新场景。",
     imageUrls: [
       "/1.png",
@@ -93,7 +93,7 @@ export const architectureProjects = [
       "/4.png",
       "/5.png"
     ],
-    tags: ["景观设计", "生态规划", "公园设计"],
+    tags: ["品牌营销", "活动策划", "方案设计"],
     githubUrl: "https://github.com/zhangsan/eco-park"
   }
 
